@@ -9,7 +9,7 @@ import (
 	"adonis/core"
 )
 
-var filePath string
+var filesPath string
 var rootCmd = &cobra.Command{
 	Use:   "adonis",
 	Short: "Analyze resource list, and process the image inside",
@@ -29,18 +29,18 @@ var rootCmd = &cobra.Command{
 var parseCmd = &cobra.Command{
 	Use:     "parse",
 	Short:   "Find all images in yaml where the key is 'image'",
-	Example: "  adonis parse -f <resource_list_file_path>",
+	Example: "  adonis parse -f <file_path/dir_path>",
 	Run: func(cmd *cobra.Command, args []string) {
-		core.GetImages(filePath)
+		core.GetImages(filesPath)
 	},
 }
 
 var pullCmd = &cobra.Command{
 	Use:     "pull",
 	Short:   "Pull all images in yaml where the key is 'image'",
-	Example: "  adonis pull -f <resource_list_file_path>",
+	Example: "  adonis pull -f <file_path/dir_path>",
 	Run: func(cmd *cobra.Command, args []string) {
-		imges := core.GetImages(filePath)
+		imges := core.GetImages(filesPath)
 		fmt.Printf("\n")
 
 		core.PullImages(core.CreateDockerClient(), imges)
@@ -51,10 +51,10 @@ var savePath string
 var saveCmd = &cobra.Command{
 	Use:   "save",
 	Short: "Save all images in yaml where the key is 'image'",
-	Example: `  adonis save -f <resource_list_file_path>
-  adonis save -f <resource_list_file_path> -p <image_save_path>`,
+	Example: `  adonis save -f <file_path/dir_path>
+  adonis save -f <file_path/dir_path> -p <image_save_path>`,
 	Run: func(cmd *cobra.Command, args []string) {
-		imges := core.GetImages(filePath)
+		imges := core.GetImages(filesPath)
 		fmt.Printf("\n")
 
 		core.PullImages(core.CreateDockerClient(), imges)
@@ -69,11 +69,11 @@ var isDeleteOriginTag bool
 var tagCmd = &cobra.Command{
 	Use:   "tag",
 	Short: "Pull all images in yaml where the key is 'image', and tag them",
-	Example: `  adonis tag -f <resource_list_file_path> -r <new_repository_path>
-  adonis tag -f <resource_list_file_path> -r <new_repository_path> -d`,
+	Example: `  adonis tag -f <file_path/dir_path> -r <new_repository_path>
+  adonis tag -f <file_path/dir_path> -r <new_repository_path> -d`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cli := core.CreateDockerClient()
-		images := core.GetImages(filePath)
+		images := core.GetImages(filesPath)
 		fmt.Printf("\n")
 
 		core.PullImages(cli, images)
@@ -93,14 +93,14 @@ var isSaveImage bool
 var pushCmd = &cobra.Command{
 	Use:   "push",
 	Short: "Push all images in yaml where the key is 'image', tag and push them",
-	Example: `  adonis push -f <resource_list_file_path> -r <new_repository_path>
-  adonis push -f <resource_list_file_path> -r <new_repository_path> -d
-  adonis push -f <resource_list_file_path> -r <new_repository_path> -s
-  adonis push -f <resource_list_file_path> -r <new_repository_path> -s -p <image_save_path>
-  adonis push -f <resource_list_file_path> -r <new_repository_path> -s -p <image_save_path> -d`,
+	Example: `  adonis push -f <file_path/dir_path> -r <new_repository_path>
+  adonis push -f <file_path/dir_path> -r <new_repository_path> -d
+  adonis push -f <file_path/dir_path> -r <new_repository_path> -s
+  adonis push -f <file_path/dir_path> -r <new_repository_path> -s -p <image_save_path>
+  adonis push -f <file_path/dir_path> -r <new_repository_path> -s -p <image_save_path> -d`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cli := core.CreateDockerClient()
-		images := core.GetImages(filePath)
+		images := core.GetImages(filesPath)
 		fmt.Printf("\n")
 
 		core.PullImages(cli, images)
@@ -124,8 +124,8 @@ var pushCmd = &cobra.Command{
 }
 
 func initFlag() {
-	rootCmd.PersistentFlags().StringVarP(&filePath, "file", "f", "", "yaml to be parsed")
-	rootCmd.MarkPersistentFlagRequired("file")
+	rootCmd.PersistentFlags().StringVarP(&filesPath, "files", "f", "", "yaml to be parsed")
+	rootCmd.MarkPersistentFlagRequired("files")
 
 	rootCmd.AddCommand(parseCmd)
 

@@ -54,10 +54,19 @@ func PullImages(cli *client.Client, images []string) {
 	}
 }
 
+func EnsureDirExist(fileDir string) {
+	exists, _ := os.Stat(fileDir)
+
+	if exists == nil {
+		os.MkdirAll(fileDir, os.ModePerm)
+	}
+}
+
 func SaveImages(cli *client.Client, images []string, fileDir string) {
 	ctx := context.Background()
 
 	for _, image := range images {
+		EnsureDirExist(fileDir)
 		imageFilePath := EnsureFilePathAvailable(filepath.Join(fileDir, GenerateImageFileName(image)))
 		fmt.Printf("Save image < %s >\n", image)
 
