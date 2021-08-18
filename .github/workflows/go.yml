@@ -37,7 +37,7 @@ jobs:
       uses: goreleaser/goreleaser-action@v1
       with:
         version: latest
-        args: release --timeout=1h  --release-notes=test/Note.md
+        args: release --timeout=1h
       env:
         GITHUB_TOKEN: ${{ secrets.ROOT_TOKEN }}
         VERSION: ${{ steps.prepare.outputs.tag_name }}
