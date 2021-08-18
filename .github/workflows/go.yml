@@ -33,4 +33,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.ROOT_TOKEN }}
       with:
-        file: adonis_0.1.4_linux_adm64
+        file: adonis_0.1.4_linux_amd64
