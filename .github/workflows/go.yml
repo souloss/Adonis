@@ -17,6 +17,6 @@ jobs:
       uses: goreleaser/goreleaser-action@v1
       with:
         version: latest
-        args: release --rm-dist
+        args: release --rm-dist --skip-validate
       env:
-        GITHUB_TOKEN: ${{ secrets.ROOT_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.ENISHI_TOKEN }}
