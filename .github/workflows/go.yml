@@ -25,7 +25,7 @@ jobs:
       run: go build -v main.go
     
     - name: Rename
-      run: mv main adonis_0.1.4_linux_amd64
+      run: mv main adonis
 
     - name: Release
       #uses: actions/upload-release-asset@v1
@@ -33,4 +33,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.ROOT_TOKEN }}
       with:
-        file: adonis_0.1.4_linux_amd64
+        file: adonis
