@@ -23,4 +23,14 @@ jobs:
 
     - name: Build
       run: go build -v main.go
+    
+    - name: Rename
+      run: mv main adonis_0.1.4_linux_adm64
 
+    - name: Release
+      #uses: actions/upload-release-asset@v1
+      uses: xresloader/upload-to-github-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.ROOT_TOKEN }}
+      with:
+        file: adonis_0.1.4_linux_adm64
